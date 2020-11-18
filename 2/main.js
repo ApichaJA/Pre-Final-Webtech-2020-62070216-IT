@@ -8,10 +8,13 @@ request.onreadystatechange = function () {
 request.open("GET", requestURL, true);
 request.send();
 
+var song = []
+
 function dataReportStatus(data) {
     var parent = document.querySelector('.song-container')
     console.log(data.tracks.items[0])
     data.tracks.items.forEach(element => {
+      song.push(element)
         var mainBox = document.createElement("div");
         mainBox.setAttribute("class", "song-box");
         mainBox.innerHTML = `
@@ -29,3 +32,31 @@ function dataReportStatus(data) {
         parent.appendChild(mainBox)
     });
 }
+
+
+document.querySelector('.find-song').addEventListener('click', function(){
+  var textSong = document.getElementById('searchsong').value
+  document.querySelector('.song-container').remove()
+  var parent = document.createElement('div')
+  parent.setAttribute('class', 'song-container')
+  document.querySelector('.container-fluid').appendChild(parent)
+    for (let index = 0; index < song.length; index++) {
+      if(song[index].album.name === textSong){
+      var mainBox = document.createElement("div");
+      mainBox.setAttribute("class", "song-box");
+      mainBox.innerHTML = `
+      <div class="box-playlist-song">
+      <div class="box-image">
+      <img src="${song[index].album.images[0].url}">
+      </div>
+      <div class="box-content">
+      <span>${song[index].album.name}</span>
+      <span>Artist: ${song[index].artists[0].name}</span>
+      <span>Release date: ${song[index].album.release_date}</span>
+      <span>Available: ${song[index].available_markets.length}</span>
+      </div>
+      `
+      parent.appendChild(mainBox)
+    }
+  }
+})

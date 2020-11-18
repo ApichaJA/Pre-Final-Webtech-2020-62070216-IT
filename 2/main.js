@@ -35,7 +35,9 @@ function dataReportStatus(data) {
 
 
 document.querySelector('.find-song').addEventListener('click', function(){
+  var nothing = 0
   var textSong = document.getElementById('searchsong').value
+  var notfound = document.querySelector('.notfound')
   document.querySelector('.song-container').remove()
   var parent = document.createElement('div')
   parent.setAttribute('class', 'song-container')
@@ -58,5 +60,11 @@ document.querySelector('.find-song').addEventListener('click', function(){
       `
       parent.appendChild(mainBox)
     }
+    else{
+      nothing+=1
+    }
+    if(nothing === song.length)
+      console.log(nothing)
+      notfound.innerHTML = 'Not Found'
   }
 })
